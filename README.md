@@ -39,3 +39,21 @@ I often find meaning in deep conversations and personal connections.
 ✨ Strength: You’re inspiring, empathetic, and deeply value harmony.
 ⚡ Weak Side: You sometimes neglect your own needs while helping others.
 
+
+---
+
+## 🖥️ Run Locally
+```bash
+# Clone the repo
+git clone https://github.com/yourusername/mbti-personality-predictor.git
+
+# Navigate into the project
+cd mbti-personality-predictor
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app
+streamlit run app.py
+
+
