@@ -1,3 +1,4 @@
+
 import os
 import pickle
 from typing import Any, Dict, Optional, Tuple
@@ -9,13 +10,6 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-try:
-    nltk.data.find('corpora/wordnet')
-except LookupError:
-    nltk.download('wordnet')
-    nltk.download('omw-1.4')
-    nltk.download('stopwords')
-    nltk.download('punkt')
 
 # -----------------------------
 # Utilities
@@ -87,8 +81,16 @@ def load_model(model_path: str) -> Tuple[Any, Optional[Any]]:
 def get_label_mapping(label_encoder: Optional[Any]) -> Optional[np.ndarray]:
     if label_encoder is not None and hasattr(label_encoder, "classes_"):
         return label_encoder.classes_
-    # No reliable mapping available; we'll handle a friendly fallback later
-    return None
+    
+    # Fallback: LabelEncoder sorts labels alphabetically, so we need the correct order
+    # This is the alphabetical order that sklearn's LabelEncoder uses
+    fallback = np.array([
+        "ENFJ", "ENFP", "ENTJ", "ENTP",  # 0-3
+        "ESFJ", "ESFP", "ESTJ", "ESTP",  # 4-7
+        "INFJ", "INFP", "INTJ", "INTP",  # 8-11
+        "ISFJ", "ISFP", "ISTJ", "ISTP",  # 12-15
+    ])
+    return fallback
 
 
 def predict_personality(pipeline: Any, text: str) -> Dict[str, Any]:
@@ -523,13 +525,13 @@ if submitted:
         except Exception:
             mbti_label = None
 
-        # If we can't map the label id, show ENFJ by request rather than a numeric id
+        # If we can't map the label id, show the numeric prediction
         if mbti_label is None:
-            mbti_label = "ENFJ"
+            mbti_label = f"Class {y_pred}"
 
         # Premium prediction card with animations
         st.markdown("<div class='prediction-card'>", unsafe_allow_html=True)
-        st.markdown(f"<div class='personality-name'>{mbti_label}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='personality-name'> Result:{mbti_label}</div>", unsafe_allow_html=True)
         
         trait = mbti_traits.get(mbti_label)
         if trait:
@@ -581,6 +583,5 @@ with st.expander("About this app", expanded=False):
         "This demo wraps a trained text classification pipeline to predict MBTI types. "
         "Provide enough text for a more reliable prediction."
     )
-
 
 
