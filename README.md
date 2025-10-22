@@ -33,3 +33,9 @@ It uses NLP (Natural Language Processing) and Machine Learning to analyze your w
 ---
 
 ## 🧠 Example Input
+I love understanding people’s emotions and helping them grow.
+I often find meaning in deep conversations and personal connections.
+## Predicted Personality: ENFJ
+✨ Strength: You’re inspiring, empathetic, and deeply value harmony.
+⚡ Weak Side: You sometimes neglect your own needs while helping others.
+
