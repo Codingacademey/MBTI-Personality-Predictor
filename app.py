@@ -9,6 +9,13 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
+try:
+    nltk.data.find('corpora/wordnet')
+except LookupError:
+    nltk.download('wordnet')
+    nltk.download('omw-1.4')
+    nltk.download('stopwords')
+    nltk.download('punkt')
 
 # -----------------------------
 # Utilities
@@ -574,5 +581,6 @@ with st.expander("About this app", expanded=False):
         "This demo wraps a trained text classification pipeline to predict MBTI types. "
         "Provide enough text for a more reliable prediction."
     )
+
 
 
